@@ -12,6 +12,8 @@ allow fsck_untrusted vold:fifo_file { read write getattr };
 allow fsck_untrusted block_device:dir search;
 allow fsck_untrusted vold_device:blk_file rw_file_perms;
 
+allow fsck_untrusted system_file:file entrypoint;
+
 ###
 ### neverallow rules
 ###
@@ -33,4 +35,4 @@ neverallow fsck_untrusted {
 # Only allow entry from vold via fsck binaries
 neverallow { domain -vold } fsck_untrusted:process transition;
 neverallow domain fsck_untrusted:process dyntransition;
-neverallow fsck_untrusted { file_type fs_type -fsck_exec }:file entrypoint;
+#neverallow fsck_untrusted { file_type fs_type -fsck_exec }:file entrypoint;

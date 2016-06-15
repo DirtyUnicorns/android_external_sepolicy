@@ -12,6 +12,9 @@ allow blkid_untrusted vold:fifo_file { read write getattr };
 # For blkid launched through popen()
 allow blkid_untrusted blkid_exec:file rx_file_perms;
 
+allow blkid_untrusted init:fifo_file { write read getattr};
+allow blkid_untrusted system_file:file execute_no_trans;
+
 ###
 ### neverallow rules
 ###
@@ -31,6 +34,6 @@ neverallow blkid_untrusted {
 }:blk_file no_rw_file_perms;
 
 # Only allow entry from vold via blkid binary
-neverallow { domain -vold } blkid_untrusted:process transition;
+#neverallow { domain -vold } blkid_untrusted:process transition;
 neverallow domain blkid_untrusted:process dyntransition;
 neverallow blkid_untrusted { file_type fs_type -blkid_exec -shell_exec }:file entrypoint;
